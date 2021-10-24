@@ -84,12 +84,14 @@ declare function encodeURIComponent(uriComponent: string | number | boolean): st
 
 /**
  * Computes a new string in which certain characters have been replaced by a hexadecimal escape sequence.
+ * @deprecated A legacy feature for browser compatibility
  * @param string A string value
  */
 declare function escape(string: string): string;
 
 /**
  * Computes a new string in which hexadecimal escape sequences are replaced with the character that it represents.
+ * @deprecated A legacy feature for browser compatibility
  * @param string A string value
  */
 declare function unescape(string: string): string;
@@ -503,6 +505,7 @@ interface String {
     // IE extensions
     /**
      * Gets a substring beginning at the specified location and having the specified length.
+     * @deprecated A legacy feature for browser compatibility
      * @param from The starting position of the desired substring. The index of the first character in the string is zero.
      * @param length The number of characters to include in the returned substring.
      */
@@ -601,9 +604,10 @@ interface NumberConstructor {
 /** An object that represents a number of any kind. All JavaScript numbers are 64-bit floating-point numbers. */
 declare var Number: NumberConstructor;
 
-interface TemplateStringsArray extends ReadonlyArray<string> {
-    readonly raw: readonly string[];
-}
+type TemplateStringsArray<
+  TParts    extends readonly string[] = readonly string[],
+  TRawParts extends readonly string[] = readonly string[],
+> = TParts & {readonly raw: TRawParts};
 
 /**
  * The type of `import.meta`.
@@ -944,6 +948,7 @@ interface RegExp {
     lastIndex: number;
 
     // Non-standard extensions
+    /** @deprecated A legacy feature for browser compatibility */
     compile(): this;
 }
 
@@ -955,16 +960,44 @@ interface RegExpConstructor {
     readonly prototype: RegExp;
 
     // Non-standard extensions
+    /** @deprecated A legacy feature for browser compatibility */
     $1: string;
+    /** @deprecated A legacy feature for browser compatibility */
     $2: string;
+    /** @deprecated A legacy feature for browser compatibility */
     $3: string;
+    /** @deprecated A legacy feature for browser compatibility */
     $4: string;
+    /** @deprecated A legacy feature for browser compatibility */
     $5: string;
+    /** @deprecated A legacy feature for browser compatibility */
     $6: string;
+    /** @deprecated A legacy feature for browser compatibility */
     $7: string;
+    /** @deprecated A legacy feature for browser compatibility */
     $8: string;
+    /** @deprecated A legacy feature for browser compatibility */
     $9: string;
+    /** @deprecated A legacy feature for browser compatibility */
+    input: string;
+    /** @deprecated A legacy feature for browser compatibility */
+    $_: string;
+    /** @deprecated A legacy feature for browser compatibility */
     lastMatch: string;
+    /** @deprecated A legacy feature for browser compatibility */
+    "$&": string;
+    /** @deprecated A legacy feature for browser compatibility */
+    lastParen: string;
+    /** @deprecated A legacy feature for browser compatibility */
+    "$+": string;
+    /** @deprecated A legacy feature for browser compatibility */
+    leftContext: string;
+    /** @deprecated A legacy feature for browser compatibility */
+    "$`": string;
+    /** @deprecated A legacy feature for browser compatibility */
+    rightContext: string;
+    /** @deprecated A legacy feature for browser compatibility */
+    "$'": string;
 }
 
 declare var RegExp: RegExpConstructor;
@@ -1281,7 +1314,7 @@ interface Array<T> {
      * Sorts an array in place.
      * This method mutates the array and returns a reference to the same array.
      * @param compareFn Function used to determine the order of the elements. It is expected to return
-     * a negative value if first argument is less than second argument, zero if they're equal and a positive
+     * a negative value if the first argument is less than the second argument, zero if they're equal, and a positive
      * value otherwise. If omitted, the elements are sorted in ascending, ASCII character order.
      * ```ts
      * [11,2,22,1].sort((a, b) => a - b)
